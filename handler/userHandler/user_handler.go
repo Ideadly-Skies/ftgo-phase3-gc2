@@ -48,7 +48,16 @@ var jwtSecret = []byte("12345")
 
 /* user route */
 
-// register user function
+// @Summary Register a new user
+// @Description Register a new user with username, password, and role
+// @Tags Users
+// @Accept json
+// @Produce json
+// @Param request body RegisterRequest true "User registration request"
+// @Success 200 {object} map[string]interface{}
+// @Failure 400 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /users/register [post]
 func RegisterUser(c echo.Context) error {
 	var req RegisterRequest
 	if err := c.Bind(&req); err != nil {
@@ -87,7 +96,16 @@ func RegisterUser(c echo.Context) error {
 	})
 }
 
-// login user function
+// @Summary Login user
+// @Description Authenticates a user and returns a JWT token for subsequent requests.
+// @Tags Users
+// @Accept json
+// @Produce json
+// @Param request body LoginRequest true "Login credentials"
+// @Success 200 {object} LoginResponse
+// @Failure 400 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /users/login [post]
 func LoginUser(c echo.Context) error {
 	var req LoginRequest
 	if err := c.Bind(&req); err != nil {

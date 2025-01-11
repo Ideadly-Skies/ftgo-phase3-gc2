@@ -1,0 +1,113 @@
+basePath: /
+definitions:
+  main.BorrowBookRequest:
+    properties:
+      book_id:
+        type: string
+    required:
+    - book_id
+    type: object
+  main.ReturnBookRequest:
+    properties:
+      book_id:
+        type: string
+    required:
+    - book_id
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: API documentation for the library management system.
+  title: Library API
+  version: "1.0"
+paths:
+  /users/borrow-book:
+    post:
+      consumes:
+      - application/json
+      description: Borrow a book using gRPC
+      parameters:
+      - description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Book ID to borrow
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/main.BorrowBookRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Borrow a book
+      tags:
+      - Books
+  /users/return-book:
+    post:
+      consumes:
+      - application/json
+      description: Allows a user to return a borrowed book by providing the book ID
+        and JWT token for authentication.
+      parameters:
+      - description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Book ID to return
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/main.ReturnBookRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Return a borrowed book
+      tags:
+      - Books
+swagger: "2.0"

@@ -39,6 +39,18 @@ type SuccessResponse struct {
 }
 
 // CreateBook handler
+// @Summary Create a new book
+// @Description Create a new book with title, author, and published date
+// @Tags Books
+// @Accept json
+// @Produce json
+// @Param Authorization header string true "Bearer token"
+// @Param body body BookRequest true "Book data"
+// @Success 200 {object} SuccessResponse
+// @Failure 400 {object} map[string]string
+// @Failure 401 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /books/create [post]
 func CreateBook(c echo.Context) error {
 	if !cust_middleware.IsAdmin(c) {
 		return c.JSON(http.StatusForbidden, map[string]string{"message": "Permission denied admin use only!"})
@@ -75,6 +87,13 @@ func CreateBook(c echo.Context) error {
 }
 
 // GetAllBooks handler
+// @Summary Get all books
+// @Description Retrieve all books with their details
+// @Tags Books
+// @Produce json
+// @Success 200 {object} SuccessResponse
+// @Failure 500 {object} map[string]string
+// @Router /books/get [get]
 func GetAllBooks(c echo.Context) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
@@ -106,6 +125,15 @@ func GetAllBooks(c echo.Context) error {
 }
 
 // GetBookByID handler
+// @Summary Get book by ID
+// @Description Retrieve details of a specific book by its ID
+// @Tags Books
+// @Produce json
+// @Param id path string true "Book ID"
+// @Success 200 {object} SuccessResponse
+// @Failure 404 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /books/get/{id} [get]
 func GetBookByID(c echo.Context) error {
 	bookID := c.Param("id")
 
@@ -128,6 +156,19 @@ func GetBookByID(c echo.Context) error {
 }
 
 // UpdateBook handler
+// @Summary Update book details
+// @Description Update the details of a specific book
+// @Tags Books
+// @Accept json
+// @Produce json
+// @Param Authorization header string true "Bearer token"
+// @Param id path string true "Book ID"
+// @Param body body BookRequest true "Book data"
+// @Success 200 {object} SuccessResponse
+// @Failure 400 {object} map[string]string
+// @Failure 401 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /books/{id} [put]
 func UpdateBook(c echo.Context) error {
 	if !cust_middleware.IsAdmin(c) {
 		return c.JSON(http.StatusForbidden, map[string]string{"message": "Permission denied admin use only!"})
@@ -159,6 +200,16 @@ func UpdateBook(c echo.Context) error {
 }
 
 // DeleteBook handler
+// @Summary Delete a book
+// @Description Delete a book by its ID
+// @Tags Books
+// @Produce json
+// @Param Authorization header string true "Bearer token"
+// @Param id path string true "Book ID"
+// @Success 200 {object} SuccessResponse
+// @Failure 401 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /books/{id} [delete]
 func DeleteBook(c echo.Context) error {
 	if !cust_middleware.IsAdmin(c) {
 		return c.JSON(http.StatusForbidden, map[string]string{"message": "Permission denied admin use only!"})

@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package library;
+option go_package = "/pb;pb";
+
+service LibraryService {
+    rpc BorrowBook (BorrowBookRequest) returns (BorrowBookResponse);
+    rpc ReturnBook (ReturnBookRequest) returns (ReturnBookResponse);
+}
+
+// borrow book request and response
+message BorrowBookRequest {
+    string book_id = 1;
+    string user_id = 2;
+}
+
+message BorrowBookResponse {
+    string message = 1;
+}
+
+// return book request and response
+message ReturnBookRequest {
+    string book_id = 1;
+    string user_id = 2;
+}
+
+message ReturnBookResponse {
+    string message = 1;
+}

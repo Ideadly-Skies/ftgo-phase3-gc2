@@ -1,0 +1,8 @@
+# Environment variables
+.env
+
+# Docker configuration
+docker-compose.yml
+Dockerfile.client
+Dockerfile.server
+Dockerfile
